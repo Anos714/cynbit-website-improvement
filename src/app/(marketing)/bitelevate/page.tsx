@@ -44,7 +44,7 @@ export default function BitelevatePage() {
       >
         <div className="rounded-card bg-brand-deep p-6 text-white">
           <p className="font-headline text-3xl font-extrabold tracking-[-0.05em]">BitElevate</p>
-          <p className="mt-1 text-sm text-white/55">An education movement by Cynbit Technologies.</p>
+          <p className="mt-1 text-sm text-white/70">An education movement by Cynbit Technologies.</p>
           <div className="mt-5 flex flex-wrap gap-2">
             <Tag tone="on-dark">Since 2024</Tag>
             <Tag tone="on-dark">Jaipur</Tag>

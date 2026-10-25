@@ -1,6 +1,5 @@
 "use client";
 
-import { AnimatePresence, m } from "motion/react";
 import { ChevronDown, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -48,6 +47,7 @@ function DesktopMenuItem({ item }: { item: NavGroup }) {
     return (
       <Link
         href={item.href ?? "#"}
+        aria-current={isCurrentPath(pathname, item.href) ? "page" : undefined}
         className={cn(
           "flex min-h-11 items-center rounded-full px-3.5 text-[0.9rem] font-semibold transition-colors hover:bg-mint",
           isCurrentPath(pathname, item.href) && "bg-mint text-brand",
@@ -83,34 +83,29 @@ function DesktopMenuItem({ item }: { item: NavGroup }) {
           className={cn("size-3.5 transition-transform duration-200", open && "rotate-180")}
         />
       </button>
-      <AnimatePresence>
-        {open ? (
-          <m.div
-            id={panelId}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 6 }}
-            transition={{ duration: 0.18, ease: "easeOut" }}
-            className="absolute left-1/2 top-[calc(100%+0.7rem)] w-[23rem] -translate-x-1/2 overflow-hidden rounded-[1.4rem] bg-shell p-2 shadow-[0_22px_55px_rgba(7,36,34,0.14)]"
-          >
-            {item.items.map((child) => (
-              <Link
-                key={child.href}
-                href={child.href}
-                onClick={() => setOpen(false)}
-                className="block rounded-[1rem] px-4 py-3.5 transition-colors hover:bg-mint"
-              >
-                <span className="block text-[0.95rem] font-bold text-ink">{child.label}</span>
-                {child.description ? (
-                  <span className="mt-0.5 block text-[0.8rem] leading-relaxed text-muted">
-                    {child.description}
-                  </span>
-                ) : null}
-              </Link>
-            ))}
-          </m.div>
-        ) : null}
-      </AnimatePresence>
+      {open ? (
+        <div
+          id={panelId}
+          className="animate-dropdown absolute left-1/2 top-[calc(100%+0.7rem)] w-[23rem] -translate-x-1/2 overflow-hidden rounded-[1.4rem] bg-shell p-2 shadow-[0_22px_55px_rgba(7,36,34,0.14)]"
+        >
+          {item.items.map((child) => (
+            <Link
+              key={child.href}
+              href={child.href}
+              aria-current={isCurrentPath(pathname, child.href) ? "page" : undefined}
+              onClick={() => setOpen(false)}
+              className="block rounded-[1rem] px-4 py-3.5 transition-colors hover:bg-mint"
+            >
+              <span className="block text-[0.95rem] font-bold text-ink">{child.label}</span>
+              {child.description ? (
+                <span className="mt-0.5 block text-[0.8rem] leading-relaxed text-muted">
+                  {child.description}
+                </span>
+              ) : null}
+            </Link>
+          ))}
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -181,6 +176,7 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
                         <Link
                           key={item.href}
                           href={item.href}
+                          aria-current={isCurrentPath(pathname, item.href) ? "page" : undefined}
                           onClick={onClose}
                           className="flex min-h-11 items-center rounded-full px-3 text-[1.02rem] font-semibold text-muted transition-colors hover:bg-mint hover:text-ink"
                         >
@@ -192,6 +188,7 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
                 ) : (
                   <Link
                     href={group.href ?? "#"}
+                    aria-current={isCurrentPath(pathname, group.href) ? "page" : undefined}
                     onClick={onClose}
                     className="flex min-h-12 items-center justify-between border-b border-ink/10 font-headline text-2xl font-extrabold tracking-[-0.04em]"
                   >

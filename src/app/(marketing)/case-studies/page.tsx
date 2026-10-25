@@ -64,7 +64,7 @@ export default function CaseStudiesPage() {
                       <p className="font-headline text-[clamp(2.2rem,3.5vw,3.5rem)] font-extrabold leading-none tracking-[-0.05em] text-peach">
                         {lead.metricValue}
                       </p>
-                      <p className="mt-1 text-sm text-white/55">
+                      <p className="mt-1 text-sm text-white/70">
                         {lead.metricLabel} · client-reported
                       </p>
                     </div>

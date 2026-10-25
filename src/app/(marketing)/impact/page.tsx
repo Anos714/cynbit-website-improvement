@@ -116,7 +116,7 @@ export default function ImpactPage() {
                     <p className="font-headline text-lg font-extrabold tracking-[-0.03em]">
                       Foundational skills
                     </p>
-                    <p className="mt-1.5 text-sm leading-relaxed text-white/55">
+                    <p className="mt-1.5 text-sm leading-relaxed text-white/70">
                       Practical computer and IT teaching where it is hardest to access.
                     </p>
                   </div>
@@ -124,7 +124,7 @@ export default function ImpactPage() {
                     <p className="font-headline text-lg font-extrabold tracking-[-0.03em]">
                       Shared infrastructure
                     </p>
-                    <p className="mt-1.5 text-sm leading-relaxed text-white/55">
+                    <p className="mt-1.5 text-sm leading-relaxed text-white/70">
                       Resources and technical support designed to be useful after we leave the room.
                     </p>
                   </div>

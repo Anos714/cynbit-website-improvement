@@ -36,7 +36,7 @@ export default function DiariesPage() {
             The things students carry are not always academic. Sometimes they are the real
             curriculum.
           </p>
-          <p className="mt-4 text-sm text-white/55">BitElevate Student Diaries</p>
+          <p className="mt-4 text-sm text-white/70">BitElevate Student Diaries</p>
         </div>
       </PageHeader>
 
@@ -57,7 +57,7 @@ export default function DiariesPage() {
                     <h2 className="font-headline text-xl font-extrabold tracking-[-0.03em]">
                       {lead.title}
                     </h2>
-                    <p className="mt-1 text-sm text-white/50">
+                    <p className="mt-1 text-sm text-white/65">
                       {lead.author} · {lead.role}
                     </p>
                   </div>

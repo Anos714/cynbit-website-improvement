@@ -24,4 +24,13 @@ export function getCareer(slug: string) {
   return careers.find((role) => role.slug === slug);
 }
 
+export function careerSummary(role: Career) {
+  return role.description.replace(/^Experience:\s*[^.]+\.\s*/, "");
+}
+
+export function careerExperience(role: Career) {
+  const match = role.description.match(/^Experience:\s*([^.]+)\./);
+  return match?.[1] ?? null;
+}
+
 export const careerDisciplines = Array.from(new Set(careers.map((role) => role.department)));
