@@ -48,6 +48,21 @@ That is a 29.1% reduction in compressed JS + CSS transfer. Full method and
 caveats: [performance notes](docs/performance.md). Raw Lighthouse HTML/JSON is
 in [`docs/evidence/lighthouse/`](docs/evidence/lighthouse/).
 
+### Live verification
+
+Checked against the production deployment on 2026-10-26:
+
+- `scripts/verify-headers.mjs` passes: enforced CSP, HSTS, cache policy,
+  same-origin CORS (no wildcard), 82 sitemap URLs, `no-store` APIs.
+- Playwright walks all 82 live URLs: `200`, visible `h1`, no console or CSP
+  errors.
+- axe finds no serious or critical violations on the 16 top-level live pages.
+- The CI workflow (lint, typecheck, unit tests, build, route parity, Playwright)
+  is green on `main`.
+
+The Lighthouse table above was measured on a local production build, not
+against Vercel; it is labelled accordingly.
+
 ## Stack
 
 | Layer | Choice |

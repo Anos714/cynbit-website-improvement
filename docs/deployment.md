@@ -8,7 +8,7 @@
 - **Output:** `.next` (handled by the preset)
 - **Install command:** `npm ci`
 - **Repository:** `https://github.com/Anos714/cynbit-website-improvement`
-- **Expected URL:** `https://cynbit-website-improvement.vercel.app`
+- **Live URL:** `https://cynbit-website-improvement.vercel.app`
 
 The site is static/ISR. No database, queue, cron or long-running worker is
 required.

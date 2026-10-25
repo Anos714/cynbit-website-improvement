@@ -181,7 +181,25 @@ docs/evidence/            Lighthouse reports and responsive screenshots
 | Browser sweep | 82/82 `200`, visible `h1`, zero console errors, zero CSP violations |
 | axe | No serious or critical violations on the 16 top-level pages |
 
-### 7.2 Lighthouse
+### 7.2 Live deployment
+
+The same checks were run against
+`https://cynbit-website-improvement.vercel.app` on 2026-10-26:
+
+- header verification passes on `/` and `/careers`, including enforced CSP,
+  the exact `s-maxage=300` policy and a same-origin CORS value;
+- Playwright visits all 82 sitemap URLs: `200`, visible `h1`, no console errors
+  and no CSP violations;
+- structured data parses on the homepage, an article and a role;
+- axe finds no serious or critical violations on the 16 top-level pages;
+- the GitHub Actions workflow is green on `main`.
+
+One platform difference was found and fixed during this pass: Vercel adds
+`access-control-allow-origin: *` to static output even when the application
+does not set it. The app now restates the header with its own origin, and the
+live header check fails if the value is ever `*`.
+
+### 7.3 Lighthouse
 
 Lighthouse 13, Chrome from the Playwright cache, local `next start`, default
 simulated throttling. Reports are committed under `docs/evidence/lighthouse/`.
@@ -200,7 +218,7 @@ server-rendered and no longer wrapped in a reveal. An unthrottled Chromium run
 throttled figure is the one to compare against field budgets, and it is the one
 reported.
 
-### 7.3 Payload
+### 7.4 Payload
 
 `scripts/measure-payload.mjs` parses the HTML for modern-path scripts and
 stylesheets, fetches each file and Brotli-compresses it at quality 11.
