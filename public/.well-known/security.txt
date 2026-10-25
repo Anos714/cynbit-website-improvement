@@ -1,0 +1,5 @@
+Contact: mailto:opportunities@cynbit.in
+Expires: 2027-10-25T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://cynbit-website-improvement.vercel.app/.well-known/security.txt
+Policy: https://cynbit-website-improvement.vercel.app/privacy
