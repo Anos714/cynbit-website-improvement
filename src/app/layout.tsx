@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { MotionProvider } from "@/components/motion/motion-provider";
 import "./globals.css";
 
 const manrope = localFont({
   src: "./fonts/manrope-latin.woff2",
-  variable: "--font-body",
+  variable: "--font-manrope",
   weight: "200 800",
   display: "swap",
   fallback: ["ui-sans-serif", "system-ui", "sans-serif"],
@@ -12,7 +13,7 @@ const manrope = localFont({
 
 const jakarta = localFont({
   src: "./fonts/plus-jakarta-sans-latin.woff2",
-  variable: "--font-display",
+  variable: "--font-jakarta",
   weight: "200 800",
   display: "swap",
   fallback: ["ui-sans-serif", "system-ui", "sans-serif"],
@@ -34,7 +35,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${manrope.variable} ${jakarta.variable}`}>
-      <body>{children}</body>
+      <body>
+        <noscript>
+          <style>{`[data-reveal]{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
+        <MotionProvider>{children}</MotionProvider>
+      </body>
     </html>
   );
 }
