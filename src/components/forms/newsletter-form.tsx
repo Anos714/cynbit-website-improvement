@@ -4,6 +4,7 @@ import { useActionState, useEffect, useRef } from "react";
 import { ArrowRight } from "lucide-react";
 import { subscribeToNewsletter } from "@/lib/actions/newsletter";
 import { FieldError, FormFeedback } from "@/components/forms/form-feedback";
+import { useHydrated } from "@/lib/use-hydrated";
 import { Button } from "@/components/ui/button";
 import { initialFormState } from "@/lib/forms";
 
@@ -12,6 +13,7 @@ export function NewsletterForm() {
     subscribeToNewsletter,
     initialFormState,
   );
+  const hydrated = useHydrated();
   const emailRef = useRef<HTMLInputElement>(null);
   const startedAtRef = useRef<HTMLInputElement>(null);
 
@@ -79,7 +81,12 @@ export function NewsletterForm() {
           </div>
         </div>
 
-        <Button type="submit" size="large" disabled={pending} aria-busy={pending}>
+        <Button
+          type="submit"
+          size="large"
+          disabled={pending || !hydrated}
+          aria-busy={pending || !hydrated}
+        >
           {pending ? "Joining..." : "Join the list"}
           <ArrowRight aria-hidden="true" className="size-4" />
         </Button>

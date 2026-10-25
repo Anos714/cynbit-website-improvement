@@ -150,6 +150,9 @@ All three forms follow the same pattern:
 1. Client-side hints improve the experience; the server validates again with
    Zod. Client validation is never treated as a security boundary.
 2. A honeypot and a minimum completion time reject naive automated submissions.
+   Submit buttons stay disabled until the client has hydrated, so a very early
+   click cannot fall through to a native form post before the Server Action is
+   attached.
 3. A sliding-window rate limiter runs before delivery. Upstash Redis is used
    when configured; otherwise the documented in-memory fallback applies.
 4. The action returns a typed result. Success says **Received** and, when the
@@ -203,9 +206,9 @@ Client payload on the homepage, compared with the audit baseline:
 
 | Group | Before (decoded) | After (decoded) | Before (Brotli) | After (Brotli) |
 |---|---:|---:|---:|---:|
-| Modern-path JavaScript | 597,497 B | 535,585 B | 186,310 B | 141,357 B |
+| Modern-path JavaScript | 597,497 B | 535,585 B | 186,310 B | 141,352 B |
 | CSS | 181,212 B | 55,642 B | 25,695 B | 9,554 B |
-| **Total transfer** | — | — | **212,005 B** | **150,911 B** |
+| **Total transfer** | — | — | **212,005 B** | **150,906 B** |
 
 That is a 28.8% reduction in compressed JS + CSS transfer. The hero rotator adds
 no dependency and no significant client payload; it uses CSS animations around a
@@ -218,8 +221,8 @@ small interval. Full method and caveats:
 Checked against the production deployment on 2026-10-26:
 
 - `scripts/verify-headers.mjs` passes: enforced CSP, HSTS, cache policy,
-  same-origin CORS (no wildcard), 82 sitemap URLs, cached `/llms.txt`, and
-  `no-store` APIs.
+  same-origin CORS (no wildcard), 82 sitemap URLs, publicly cacheable
+  `/llms.txt`, and `no-store` APIs.
 - Playwright walks all 82 live URLs: `200`, visible `h1`, no console or CSP
   errors.
 - axe finds no serious or critical violations on the 16 top-level live pages.
