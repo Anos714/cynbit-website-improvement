@@ -9,6 +9,7 @@
 - **Install command:** `npm ci`
 - **Repository:** `https://github.com/Anos714/cynbit-website-improvement`
 - **Live URL:** `https://cynbit-website-improvement.vercel.app`
+- **Current release:** `v1.0.3`
 
 The site is static/ISR. No database, queue, cron or long-running worker is
 required.
@@ -87,11 +88,12 @@ export URL=https://cynbit-website-improvement.vercel.app
 curl -sSI "$URL/" | grep -iE 'content-security-policy|strict-transport-security|cache-control|x-powered-by'
 curl -sS "$URL/sitemap.xml" | grep -c '<loc>'
 curl -sS "$URL/robots.txt"
+curl -sS "$URL/llms.txt" | head
 curl -sS "$URL/.well-known/security.txt"
 curl -s -o /dev/null -w '%{http_code}\n' "$URL/api/health"
 
 npx playwright install chromium
-PLAYWRIGHT_BASE_URL="$URL" npx playwright test
+PLAYWRIGHT_BASE_URL="$URL" npx playwright test tests/e2e/routes.spec.ts
 ```
 
 `scripts/verify-headers.mjs` also accepts a base URL:

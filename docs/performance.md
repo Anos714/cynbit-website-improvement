@@ -24,11 +24,11 @@ The two structural problems were cache policy (PERF-02, PERF-03) and payload
 
 | Group | Baseline | Rebuild | Change |
 |---|---:|---:|---:|
-| JS decoded | 597,497 B | 534,422 B | −63,075 B (−10.6%) |
-| JS Brotli | 186,310 B | 140,923 B | −45,387 B (−24.4%) |
-| CSS decoded | 181,212 B | 54,955 B | −126,257 B (−69.7%) |
-| CSS Brotli | 25,695 B | 9,430 B | −16,265 B (−63.3%) |
-| **Total Brotli** | **212,005 B** | **150,353 B** | **−61,652 B (−29.1%)** |
+| JS decoded | 597,497 B | 535,585 B | −61,912 B (−10.4%) |
+| JS Brotli | 186,310 B | 141,357 B | −44,953 B (−24.1%) |
+| CSS decoded | 181,212 B | 55,642 B | −125,570 B (−69.3%) |
+| CSS Brotli | 25,695 B | 9,554 B | −16,141 B (−62.8%) |
+| **Total Brotli** | **212,005 B** | **150,911 B** | **−61,094 B (−28.8%)** |
 
 The CSS reduction is the design rebuild on Tailwind with a small semantic
 utility layer instead of a 177 KB generated stylesheet. The JS reduction comes
@@ -92,17 +92,17 @@ Lighthouse 13.5, Chrome from the Playwright cache, local production server
 
 | Page | Form factor | Perf | A11y | Best practices | SEO | LCP | TBT | CLS |
 |---|---|---:|---:|---:|---:|---|---|---|
-| `/` | Mobile | 84 | 100 | 100 | 100 | 3.4 s | 330 ms | 0 |
-| `/` | Desktop | 100 | 100 | 100 | 100 | 0.7 s | 20 ms | 0 |
-| `/careers` | Mobile | 93 | 100 | 100 | 100 | 3.0 s | 160 ms | 0 |
-| `/blog/top-web-development-trends-2026` | Mobile | 97 | 100 | 100 | 100 | 2.4 s | 120 ms | 0 |
+| `/` | Mobile | 95 | 100 | 100 | 100 | 2.7 s | 160 ms | 0 |
+| `/` | Desktop | 100 | 100 | 100 | 100 | 0.7 s | 0 ms | 0 |
+| `/careers` | Mobile | 94 | 100 | 100 | 100 | 2.3 s | 230 ms | 0 |
+| `/blog/top-web-development-trends-2026` | Mobile | 97 | 100 | 100 | 100 | 2.4 s | 70 ms | 0 |
 
 Interpretation:
 
 - Desktop is clean: 100 across all categories, 0.7 s LCP.
-- The mobile homepage is the weakest sample at 84. LCP at 3.4 s is dominated
+- The mobile homepage is the weakest sample at 95. LCP at 2.7 s is dominated
   by simulated slow-4G transfer of the HTML and font, plus the cost of the
-  capability section. TBT (330 ms) reflects hydration of the interactive
+  capability section. TBT (160 ms) reflects hydration of the interactive
   islands.
 - Careers and the article sample score higher because they carry less
   interactive UI.

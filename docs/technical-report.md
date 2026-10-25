@@ -43,10 +43,10 @@ site was insecure in a way the evidence did not show.
   console errors or enforced-CSP violations.
 - axe reports no serious or critical WCAG 2.0/2.1 A/AA violations on the 16
   top-level pages.
-- Lighthouse (local production build) scored 84–100 on performance and 100 on
+- Lighthouse (local production build) scored 94–100 on performance and 100 on
   accessibility, best practices and SEO across the sampled pages.
 - Compressed JS + CSS transfer on the homepage fell from 212,005 B to
-  150,353 B, a 29.1% reduction against the audit baseline.
+  150,911 B, a 28.8% reduction against the audit baseline.
 
 Section 7 explains exactly how those numbers were produced and what they do not
 prove.
@@ -59,7 +59,7 @@ prove.
 | Language | TypeScript strict | Content shapes, action state and JSON-LD are easy to get subtly wrong |
 | Styling | Tailwind CSS 4 with a small set of semantic utilities | Keeps the CSS payload far below the 181 KB baseline |
 | Fonts | `next/font/local` with two variable WOFF2 files | Removes the render-blocking third-party stylesheet (PERF-05) |
-| Motion | CSS transitions driven by one `IntersectionObserver`; Motion only inside the lazy newsletter dialog | Avoids shipping an animation runtime on every route and protects LCP |
+| Motion | CSS transitions and a small hero rotator; Motion only inside the lazy newsletter dialog | Avoids shipping an animation runtime on every route and protects LCP |
 | Forms | Server Actions with `useActionState`, Zod on the server | No public REST surface to abuse; validation cannot be bypassed from the client |
 | Rate limits | Upstash sliding window, per IP + email + email domain, with an explicit in-memory fallback | Distributed by default; the fallback is honest and documented |
 | Email | Resend when configured, otherwise a clearly labelled demo transport | The form must never claim delivery that did not happen |
@@ -140,12 +140,17 @@ Contact, newsletter and career applications share one pipeline:
 
 ### 5.5 SEO and structured data
 
-- One `Organization` + `WebSite` graph in the root layout.
-- `BlogPosting` + `BreadcrumbList` on articles.
-- `JobPosting` + `BreadcrumbList` on roles, with the date fields required by
-  the schema.
-- Canonical URLs on every page, Open Graph and Twitter metadata, a static
-  1200×630 image, `robots.txt`, an 82-URL sitemap and `security.txt`.
+- One `Organization` + `ProfessionalService` + `WebSite` graph in the root
+  layout, including the studio address, `areaServed`, `knowsAbout`, a contact
+  point and `sameAs` profiles.
+- `BlogPosting` + `BreadcrumbList` on articles and `JobPosting` +
+  `BreadcrumbList` on roles.
+- `FAQPage` generated from the visible contact FAQ and `Service` generated
+  from the visible service practices.
+- `/llms.txt` with a canonical summary and factual links for generative search.
+- Per-page canonical URLs, Open Graph/Twitter metadata with the correct page
+  title, a static 1200×630 fallback image, `robots.txt`, an 82-URL sitemap and
+  `security.txt`.
 - Top-level sitemap entries intentionally omit `lastModified` because the
   content has no trustworthy change date. Blog, case study and diary entries
   use the dates that exist in the content. This is the PERF-04 fix: no
@@ -177,11 +182,13 @@ docs/evidence/            Lighthouse reports and responsive screenshots
 | Production build | Pass; all routes prerendered |
 | Route parity | 82 expected, 82 in sitemap, 82 HTML files |
 | Header verification | All assertions pass on `/` and `/careers` |
-| Playwright | 9 tests: 82-route sweep, structured data, axe on 16 pages, newsletter, mobile menu, accordion, contact, application, 404 |
+| Playwright | 18 test runs across 2 spec files (Chromium + Pixel 7): 82-route sweep, structured data, axe on 16 pages, newsletter, mobile menu, hero motion, accordion, contact, application, 404 |
 | Browser sweep | 82/82 `200`, visible `h1`, zero console errors, zero CSP violations |
 | axe | No serious or critical violations on the 16 top-level pages |
 
 ### 7.2 Live deployment
+
+Final release: `v1.0.3`.
 
 The same checks were run against
 `https://cynbit-website-improvement.vercel.app` on 2026-10-26:
@@ -206,17 +213,17 @@ simulated throttling. Reports are committed under `docs/evidence/lighthouse/`.
 
 | Page | Form factor | Perf | A11y | Best practices | SEO | LCP | TBT | CLS |
 |---|---|---:|---:|---:|---:|---|---|---|
-| `/` | Mobile | 84 | 100 | 100 | 100 | 3.4 s | 330 ms | 0 |
-| `/` | Desktop | 100 | 100 | 100 | 100 | 0.7 s | 20 ms | 0 |
-| `/careers` | Mobile | 93 | 100 | 100 | 100 | 3.0 s | 160 ms | 0 |
-| `/blog/top-web-development-trends-2026` | Mobile | 97 | 100 | 100 | 100 | 2.4 s | 120 ms | 0 |
+| `/` | Mobile | 95 | 100 | 100 | 100 | 2.7 s | 160 ms | 0 |
+| `/` | Desktop | 100 | 100 | 100 | 100 | 0.7 s | 0 ms | 0 |
+| `/careers` | Mobile | 94 | 100 | 100 | 100 | 2.3 s | 230 ms | 0 |
+| `/blog/top-web-development-trends-2026` | Mobile | 97 | 100 | 100 | 100 | 2.4 s | 70 ms | 0 |
 
 The mobile homepage LCP is dominated by Lighthouse's simulated slow 4G and CPU
 throttling, not by an animation: the hero heading, introduction and CTAs are
 server-rendered and no longer wrapped in a reveal. An unthrottled Chromium run
 (Pixel 7 emulation, local) measured LCP at 448 ms; desktop was 188 ms. The
-throttled figure is the one to compare against field budgets, and it is the one
-reported.
+throttled 2.7 s figure is the one to compare against field budgets, and it is
+the one reported.
 
 ### 7.4 Payload
 
@@ -225,11 +232,11 @@ stylesheets, fetches each file and Brotli-compresses it at quality 11.
 
 | Group | Audit baseline | Rebuild | Change |
 |---|---:|---:|---:|
-| JS decoded | 597,497 B | 534,422 B | −10.6% |
-| JS Brotli | 186,310 B | 140,923 B | −24.4% |
-| CSS decoded | 181,212 B | 54,955 B | −69.7% |
-| CSS Brotli | 25,695 B | 9,430 B | −63.3% |
-| Total Brotli | 212,005 B | 150,353 B | −29.1% |
+| JS decoded | 597,497 B | 535,585 B | −10.4% |
+| JS Brotli | 186,310 B | 141,357 B | −24.1% |
+| CSS decoded | 181,212 B | 55,642 B | −69.3% |
+| CSS Brotli | 25,695 B | 9,554 B | −62.8% |
+| Total Brotli | 212,005 B | 150,911 B | −28.8% |
 
 The CSS drop comes from rebuilding the design on Tailwind with a small
 semantic layer instead of the original 177 KB utility bundle. The JS drop comes

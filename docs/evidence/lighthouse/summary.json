@@ -3,15 +3,15 @@
     "url": "http://localhost:3100/",
     "formFactor": "mobile",
     "scores": {
-      "performance": 84,
+      "performance": 95,
       "accessibility": 100,
       "best-practices": 100,
       "seo": 100
     },
-    "lcp": "3.4 s",
+    "lcp": "2.7 s",
     "cls": "0",
-    "tbt": "330 ms",
-    "transfer": "Total size was 402 KiB"
+    "tbt": "160 ms",
+    "transfer": "Total size was 407 KiB"
   },
   {
     "url": "http://localhost:3100/",
@@ -24,22 +24,22 @@
     },
     "lcp": "0.7 s",
     "cls": "0",
-    "tbt": "20 ms",
-    "transfer": "Total size was 504 KiB"
+    "tbt": "0 ms",
+    "transfer": "Total size was 509 KiB"
   },
   {
     "url": "http://localhost:3100/careers",
     "formFactor": "mobile",
     "scores": {
-      "performance": 93,
+      "performance": 94,
       "accessibility": 100,
       "best-practices": 100,
       "seo": 100
     },
-    "lcp": "3.0 s",
+    "lcp": "2.3 s",
     "cls": "0",
-    "tbt": "160 ms",
-    "transfer": "Total size was 292 KiB"
+    "tbt": "230 ms",
+    "transfer": "Total size was 295 KiB"
   },
   {
     "url": "http://localhost:3100/blog/top-web-development-trends-2026",
@@ -52,7 +52,7 @@
     },
     "lcp": "2.4 s",
     "cls": "0",
-    "tbt": "120 ms",
-    "transfer": "Total size was 387 KiB"
+    "tbt": "70 ms",
+    "transfer": "Total size was 390 KiB"
   }
 ]
