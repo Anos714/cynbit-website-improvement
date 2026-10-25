@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
-import { MotionProvider } from "@/components/motion/motion-provider";
+import { JsonLd } from "@/components/seo/json-ld";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -79,12 +79,49 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${manrope.variable} ${jakarta.variable}`}>
+    <html
+      lang="en"
+      data-scroll-behavior="smooth"
+      className={`${manrope.variable} ${jakarta.variable}`}
+    >
       <body>
+        <JsonLd
+          data={{
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "Organization",
+                "@id": `${site.url}/#organization`,
+                name: site.name,
+                url: site.url,
+                logo: `${site.url}/brand/cynbit-logo.svg`,
+                email: site.email,
+                telephone: site.phones[0],
+                address: {
+                  "@type": "PostalAddress",
+                  streetAddress: site.address.line1,
+                  addressLocality: site.address.city,
+                  addressRegion: site.address.region,
+                  postalCode: site.address.postalCode,
+                  addressCountry: site.address.country,
+                },
+                sameAs: site.socials.map((social) => social.href),
+              },
+              {
+                "@type": "WebSite",
+                "@id": `${site.url}/#website`,
+                url: site.url,
+                name: site.name,
+                publisher: { "@id": `${site.url}/#organization` },
+                inLanguage: "en-IN",
+              },
+            ],
+          }}
+        />
         <noscript>
           <style>{`[data-reveal]{opacity:1!important;transform:none!important}`}</style>
         </noscript>
-        <MotionProvider>{children}</MotionProvider>
+        {children}
       </body>
     </html>
   );
