@@ -63,11 +63,12 @@ controls the custom domain. This follows the audit's own sequencing.
 **Audit:** `access-control-allow-origin: *` on `/` and `/services`, absent
 elsewhere.
 
-**Change:** no CORS header is configured anywhere. The app does not need
-cross-origin reads.
+**Change:** `next.config.ts` emits `Access-Control-Allow-Origin` with the
+canonical site origin. This is required because Vercel adds a wildcard value to
+static output by default; restating it overrides that default.
 
-**Verification:** `verify:headers` asserts there is no wildcard CORS header on
-`/` and `/careers`.
+**Verification:** `verify:headers` asserts the value is present and is not `*`
+on `/` and `/careers`, locally and on the live host.
 
 ## SEC-04 — Server Action abuse surface
 

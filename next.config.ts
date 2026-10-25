@@ -37,6 +37,13 @@ const securityHeaders = [
     key: enforceCsp ? "Content-Security-Policy" : "Content-Security-Policy-Report-Only",
     value: contentSecurityPolicy,
   },
+  // Vercel serves `access-control-allow-origin: *` on static output by
+  // default. Restate it for our own origin so HTML documents do not advertise
+  // cross-origin readability.
+  {
+    key: "Access-Control-Allow-Origin",
+    value: process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://cynbit-website-improvement.vercel.app",
+  },
   { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
   { key: "Cross-Origin-Resource-Policy", value: "same-origin" },
   {

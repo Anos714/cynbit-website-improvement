@@ -28,12 +28,14 @@ Applied to every response by `next.config.ts`:
 | `Permissions-Policy` | camera, microphone, geolocation, payment, usb, browsing-topics disabled | Remove unused capabilities |
 | `Cross-Origin-Opener-Policy` | `same-origin` | Isolate the browsing context |
 | `Cross-Origin-Resource-Policy` | `same-origin` | Prevent cross-origin embedding of resources |
+| `Access-Control-Allow-Origin` | the canonical site origin | Overrides Vercel's default wildcard on static output |
 | `X-Powered-By` | removed (`poweredByHeader: false`) | Reduce framework fingerprinting |
 
-No `Access-Control-Allow-Origin` header is emitted, so the wildcard CORS
-finding (SEC-03) is closed. `scripts/verify-headers.mjs` fails if any of these
-headers, the HTML cache policy or the absence of a wildcard CORS header
-changes.
+The deployment platform adds `access-control-allow-origin: *` to static output.
+`next.config.ts` restates the header with the canonical site origin, so the
+wildcard CORS finding (SEC-03) is closed on the live host as well as locally.
+No route accepts cross-origin reads. `scripts/verify-headers.mjs` fails if the
+value becomes `*` or disappears.
 
 ### 2.1 Content Security Policy
 
