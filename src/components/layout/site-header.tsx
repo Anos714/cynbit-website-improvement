@@ -59,7 +59,13 @@ function DesktopMenuItem({ item }: { item: NavGroup }) {
   }
 
   return (
-    <div ref={wrapperRef} className="relative">
+    <div
+      ref={wrapperRef}
+      className="relative"
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setOpen(false);
+      }}
+    >
       <button
         type="button"
         aria-expanded={open}
@@ -225,7 +231,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 bg-ground">
       <Container className="flex h-[4.7rem] items-center gap-5 md:h-[5.3rem]">
         <Link href="/" aria-label="Cynbit home" className="shrink-0">
-          <Logo priority className="h-8 w-auto md:h-9" />
+          <Logo priority className="h-9 w-auto md:h-10" />
         </Link>
 
         <nav aria-label="Primary navigation" className="ml-auto hidden items-center lg:flex">
