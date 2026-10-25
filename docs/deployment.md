@@ -37,8 +37,9 @@ short revalidation secret, or `EMAIL_TRANSPORT=resend` without credentials.
 The current production deployment has `NEXT_PUBLIC_SITE_URL` and the Upstash
 URL/token set, so distributed rate limiting is active there. Resend credentials
 and `REVALIDATE_SECRET` remain unset, so forms stay in demo mode and the
-revalidation endpoint is unavailable. The Upstash values are Production-only;
-local and Preview environments fall back to the in-memory limiter.
+revalidation endpoint is unavailable. The Upstash pair is configured for
+Production and local development; Preview deployments fall back to the
+in-memory limiter unless the variables are added there.
 
 ## 3. Deploy with the Vercel CLI
 
