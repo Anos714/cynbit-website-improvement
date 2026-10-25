@@ -92,6 +92,10 @@ test.describe("accessibility @desktop", () => {
 
   test("top-level pages have no serious or critical axe violations", async ({ page }) => {
     test.setTimeout(300_000);
+    // Reveal transitions animate opacity; axe can sample mid-fade and report a
+    // false contrast failure. Test the settled state that reduced-motion users
+    // also see.
+    await page.emulateMedia({ reducedMotion: "reduce" });
     const failures: string[] = [];
 
     for (const path of topLevel) {
