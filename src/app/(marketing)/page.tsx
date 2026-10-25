@@ -44,28 +44,23 @@ export default function HomePage() {
         <Container>
           <div className="grid items-end gap-12 lg:grid-cols-[minmax(0,1.22fr)_minmax(21rem,0.78fr)] lg:gap-10">
             <div>
-              <Reveal>
-                <h1 className="display-hero max-w-[12ch]">
-                  Architecting <span className="block text-brand">what&apos;s next.</span>
-                </h1>
-              </Reveal>
-              <Reveal delay={0.08}>
-                <p className="body-lead mt-8 max-w-xl">{homeContent.introduction}</p>
-              </Reveal>
-              <Reveal delay={0.14}>
-                <div className="mt-9 flex flex-wrap items-center gap-3">
-                  <ButtonLink href="/contact" size="large">
-                    Start a project
-                    <ArrowUpRight aria-hidden="true" className="size-4" />
-                  </ButtonLink>
-                  <ButtonLink href="/case-studies" variant="secondary" size="large">
-                    See the work
-                  </ButtonLink>
-                </div>
-                <p className="mt-5 text-sm font-medium text-muted">
-                  A real conversation, not a discovery-call funnel.
-                </p>
-              </Reveal>
+              {/* Keep the LCP heading out of the reveal animation so it paints with the document. */}
+              <h1 className="display-hero max-w-[12ch]">
+                Architecting <span className="block text-brand">what&apos;s next.</span>
+              </h1>
+              <p className="body-lead mt-8 max-w-xl">{homeContent.introduction}</p>
+              <div className="mt-9 flex flex-wrap items-center gap-3">
+                <ButtonLink href="/contact" size="large">
+                  Start a project
+                  <ArrowUpRight aria-hidden="true" className="size-4" />
+                </ButtonLink>
+                <ButtonLink href="/case-studies" variant="secondary" size="large">
+                  See the work
+                </ButtonLink>
+              </div>
+              <p className="mt-5 text-sm font-medium text-muted">
+                A real conversation, not a discovery-call funnel.
+              </p>
             </div>
 
             <Reveal delay={0.1} className="w-full">

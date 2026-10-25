@@ -16,9 +16,12 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
     "verify:routes": "node scripts/verify-routes.mjs",
     "verify:headers": "node scripts/verify-headers.mjs",
     "measure:payload": "node scripts/measure-payload.mjs",
+    "lighthouse": "node scripts/lighthouse.mjs",
     "check": "npm run lint && npm run typecheck && npm run test && npm run build && npm run verify:routes",
     "analyze": "ANALYZE=true next build"
   },
@@ -36,8 +39,10 @@
     "zod": "4.6.7"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
     "@eslint/eslintrc": "3.3.7",
     "@next/bundle-analyzer": "16.4.3",
+    "@playwright/test": "^1.64.1",
     "@tailwindcss/postcss": "4.3.3",
     "@types/node": "22.20.5",
     "@types/react": "19.3.0",
@@ -45,6 +50,7 @@
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "9.39.5",
     "eslint-config-next": "16.4.3",
+    "lighthouse": "^13.5.0",
     "sharp": "0.35.5",
     "tailwindcss": "4.3.3",
     "typescript": "5.9.3",
