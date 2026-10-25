@@ -1,0 +1,28 @@
+# dependencies
+node_modules
+.pnp
+.pnp.*
+
+# next.js
+.next
+out
+build
+next-env.d.ts.timestamp
+
+# production
+dist
+
+# testing
+coverage
+
+# environment
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# tooling
+.taste-skill
+.vercel
+*.tsbuildinfo
+.DS_Store
