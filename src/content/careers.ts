@@ -1,5 +1,11 @@
 import rawCareers from "./data/careers.json";
 
+// The source data has no per-role dates. These constants describe when the
+// current set of openings was published and when it should be reviewed again;
+// JobPosting requires both fields. Sitemap entries still omit lastmod.
+export const CAREERS_POSTED_AT = "2026-10-25";
+export const CAREERS_VALID_THROUGH = "2027-01-23";
+
 export type Career = {
   slug: string;
   title: string;

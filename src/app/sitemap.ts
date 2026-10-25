@@ -5,12 +5,10 @@ import { caseStudies } from "@/content/case-studies";
 import { diaryEntries } from "@/content/diaries";
 import { site } from "@/lib/site";
 
-const RELEASE_DATE = "2026-10-25";
-
 function isoDate(value?: string) {
-  if (!value) return RELEASE_DATE;
+  if (!value) return undefined;
   const date = new Date(value);
-  return Number.isNaN(date.getTime()) ? RELEASE_DATE : date.toISOString();
+  return Number.isNaN(date.getTime()) ? undefined : date.toISOString();
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -34,9 +32,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   return [
+    // Top-level pages are edited continuously, so they omit lastModified
+    // rather than advertise a fabricated change date.
     ...topLevel.map(({ path, priority, changeFrequency }) => ({
       url: `${site.url}${path}`,
-      lastModified: RELEASE_DATE,
       changeFrequency,
       priority,
     })),
@@ -52,9 +51,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "yearly" as const,
       priority: 0.7,
     })),
+    // Public roles do not expose a reliable posting or update date, so these
+    // entries intentionally omit lastmod instead of inventing one.
     ...careers.map((role) => ({
       url: `${site.url}/careers/${role.slug}`,
-      lastModified: RELEASE_DATE,
       changeFrequency: "weekly" as const,
       priority: 0.6,
     })),

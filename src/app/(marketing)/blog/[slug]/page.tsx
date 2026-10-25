@@ -16,6 +16,7 @@ import {
   textToId,
 } from "@/content/blog";
 import { site } from "@/lib/site";
+import { blogPostingJsonLd, breadcrumbListJsonLd } from "@/lib/seo";
 import { formatDate } from "@/lib/utils";
 
 export const revalidate = 300;
@@ -70,37 +71,20 @@ export default async function BlogPostPage({ params }: PageProps) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
-      {
-        "@type": "Article",
-        headline: post.title,
+      blogPostingJsonLd({
+        title: post.title,
         description: post.description,
-        image: `${site.url}${post.image}`,
-        datePublished: new Date(post.publishedAt).toISOString(),
-        dateModified: new Date(post.publishedAt).toISOString(),
-        articleSection: post.category,
-        author: {
-          "@type": "Organization",
-          name: "Cynbit Technologies",
-          url: site.url,
-        },
-        publisher: {
-          "@type": "Organization",
-          name: "Cynbit Technologies",
-          logo: {
-            "@type": "ImageObject",
-            url: `${site.url}/brand/cynbit-logo.svg`,
-          },
-        },
-        mainEntityOfPage: canonicalUrl,
-      },
-      {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Insights", item: `${site.url}/blog` },
-          { "@type": "ListItem", position: 2, name: post.category },
-          { "@type": "ListItem", position: 3, name: post.title, item: canonicalUrl },
-        ],
-      },
+        image: post.image,
+        url: canonicalUrl,
+        publishedAt: post.publishedAt,
+        category: post.category,
+        readTime: post.readTime,
+      }),
+      breadcrumbListJsonLd([
+        { name: "Insights", path: "/blog" },
+        { name: post.category },
+        { name: post.title },
+      ]),
     ],
   };
 
