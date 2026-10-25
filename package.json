@@ -1,6 +1,6 @@
 {
   "name": "cynbit-website-improvement",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "private": true,
   "description": "A secure, high-performance, content-driven rebuild of Cynbit's public website.",
   "engines": {

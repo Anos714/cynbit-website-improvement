@@ -144,7 +144,7 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
   return (
     <dialog
       ref={dialogRef}
-      className="m-0 h-dvh max-h-none w-full max-w-none overflow-y-auto bg-shell p-0 text-ink backdrop:bg-ink/40 md:hidden"
+      className="m-0 h-dvh max-h-none w-full max-w-none overflow-y-auto bg-shell p-0 text-ink backdrop:bg-ink/40 lg:hidden"
       aria-label="Site menu"
     >
       <div className="flex min-h-dvh flex-col">

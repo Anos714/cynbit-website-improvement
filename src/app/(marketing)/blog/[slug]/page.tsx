@@ -15,6 +15,7 @@ import {
   getRelatedBlogPosts,
   textToId,
 } from "@/content/blog";
+import { pageMetadata } from "@/lib/metadata";
 import { site } from "@/lib/site";
 import { blogPostingJsonLd, breadcrumbListJsonLd } from "@/lib/seo";
 import { formatDate } from "@/lib/utils";
@@ -34,27 +35,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!post) return { title: "Article not found" };
 
-  return {
+  return pageMetadata({
     title: post.title,
     description: post.description,
-    alternates: { canonical: `/blog/${post.slug}` },
-    openGraph: {
-      type: "article",
-      title: post.title,
-      description: post.description,
-      url: `/blog/${post.slug}`,
+    path: `/blog/${post.slug}`,
+    image: post.image,
+    imageAlt: post.title,
+    article: {
       publishedTime: new Date(post.publishedAt).toISOString(),
       authors: [post.author],
       section: post.category,
-      images: [{ url: post.image, alt: post.title }],
     },
-    twitter: {
-      card: "summary_large_image",
-      title: post.title,
-      description: post.description,
-      images: [post.image],
-    },
-  };
+  });
 }
 
 export default async function BlogPostPage({ params }: PageProps) {

@@ -8,15 +8,16 @@ import { Container } from "@/components/ui/container";
 import { PageHeader } from "@/components/ui/page-header";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { learningDimensions } from "@/content/site-pages";
+import { pageMetadata } from "@/lib/metadata";
 
 export const revalidate = 300;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Learning paths",
   description:
     "Design a learning path around your direction. Choose from 16 BitElevate dimensions across AI, software, cloud, data and growth.",
-  alternates: { canonical: "/bitelevate/paths" },
-};
+  path: "/bitelevate/paths",
+});
 
 const principles = [
   {

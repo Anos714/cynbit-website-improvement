@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, GraduationCap, Sparkles, Users } from "lucide-react";
 import { CapabilityExplorer } from "@/components/home/capability-explorer";
+import { HeroRotator } from "@/components/home/hero-rotator";
 import { CaseStudyCard } from "@/components/content/case-study-card";
 import { ArticleCard } from "@/components/content/article-card";
 import { Reveal } from "@/components/motion/reveal";
@@ -21,15 +22,16 @@ import {
   studentVoices,
   teamMembers,
 } from "@/content/site-pages";
+import { pageMetadata } from "@/lib/metadata";
 
 export const revalidate = 300;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "AI automation, software and cloud architecture",
   description:
     "Cynbit Technologies is a Jaipur studio building AI automation, custom software and cloud systems for ambitious teams. Explore selected work, products and BitElevate.",
-  alternates: { canonical: "/" },
-};
+  path: "/",
+});
 
 const productTone = {
   mint: "bg-mint",
@@ -45,8 +47,8 @@ export default function HomePage() {
           <div className="grid items-end gap-12 lg:grid-cols-[minmax(0,1.22fr)_minmax(21rem,0.78fr)] lg:gap-10">
             <div>
               {/* Keep the LCP heading out of the reveal animation so it paints with the document. */}
-              <h1 className="display-hero max-w-[12ch]">
-                Architecting <span className="block text-brand">what&apos;s next.</span>
+              <h1 className="display-hero max-w-[12ch]" aria-label="Architecting what's next.">
+                Architecting <HeroRotator />
               </h1>
               <p className="body-lead mt-8 max-w-xl">{homeContent.introduction}</p>
               <div className="mt-9 flex flex-wrap items-center gap-3">

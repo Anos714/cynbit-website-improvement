@@ -9,15 +9,16 @@ import { PageHeader } from "@/components/ui/page-header";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Tag } from "@/components/ui/tag";
 import { specialisations, studentVoices } from "@/content/site-pages";
+import { pageMetadata } from "@/lib/metadata";
 
 export const revalidate = 300;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "BitElevate",
   description:
     "BitElevate is Cynbit's education programme: live projects, industry stacks and mentorship for engineering students ready to move from learning to professional execution.",
-  alternates: { canonical: "/bitelevate" },
-};
+  path: "/bitelevate",
+});
 
 const programmeBenefits = [
   {

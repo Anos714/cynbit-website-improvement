@@ -8,15 +8,16 @@ import { PageHeader } from "@/components/ui/page-header";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { careerSummary, careers, fullTimeRoles, internships } from "@/content/careers";
 import { careerBenefits, operatingModel } from "@/content/site-pages";
+import { pageMetadata } from "@/lib/metadata";
 
 export const revalidate = 300;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Careers",
   description:
     "Explore full-time and internship opportunities at Cynbit Technologies across engineering, growth and operations. Remote-first, architect-led work in Jaipur.",
-  alternates: { canonical: "/careers" },
-};
+  path: "/careers",
+});
 
 type CareerRole = (typeof careers)[number];
 

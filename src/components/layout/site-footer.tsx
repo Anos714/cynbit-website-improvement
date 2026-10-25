@@ -16,7 +16,7 @@ const socialMarks = {
 export function SiteFooter() {
   return (
     <footer className="bg-brand-deep text-white">
-      <Container className="pt-16 md:pt-24">
+      <Container className="pb-5 pt-16 md:pt-24">
         <div className="grid gap-10 pb-16 md:pb-24 lg:grid-cols-[minmax(0,1.25fr)_minmax(19rem,0.55fr)] lg:items-end">
           <div>
             <p className="max-w-[12ch] font-headline text-[clamp(3rem,7vw,6.8rem)] font-extrabold leading-[0.92] tracking-[-0.06em]">
@@ -120,7 +120,7 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="mb-5 flex flex-col gap-5 rounded-[1.2rem] bg-white/[0.055] px-5 py-5 text-xs text-white/70 md:flex-row md:items-center md:justify-between md:px-7">
+        <div className="flex flex-col gap-5 rounded-[1.2rem] bg-white/[0.055] px-5 py-5 text-xs text-white/70 md:flex-row md:items-center md:justify-between md:px-7">
           <p>© {new Date().getFullYear()} Cynbit Technologies. All rights reserved.</p>
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
             <NewsletterTrigger className="text-white/70" />

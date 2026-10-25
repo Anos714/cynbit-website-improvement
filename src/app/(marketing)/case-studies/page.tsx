@@ -10,15 +10,16 @@ import { PageHeader } from "@/components/ui/page-header";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Tag } from "@/components/ui/tag";
 import { caseStudies } from "@/content/case-studies";
+import { pageMetadata } from "@/lib/metadata";
 
 export const revalidate = 300;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Case studies",
   description:
     "Explore 13 public Cynbit case studies across software engineering, cloud strategy and digital marketing. Challenge, solution and client-reported outcome.",
-  alternates: { canonical: "/case-studies" },
-};
+  path: "/case-studies",
+});
 
 export default function CaseStudiesPage() {
   const [lead, ...rest] = caseStudies;

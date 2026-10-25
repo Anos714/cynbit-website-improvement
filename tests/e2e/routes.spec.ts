@@ -45,9 +45,11 @@ test.describe("public route sweep @desktop", () => {
 
   test("structured data parses and uses the expected schema types", async ({ page }) => {
     const expectations: Array<[string, string[]]> = [
-      ["/", ["Organization", "WebSite"]],
+      ["/", ["Organization", "ProfessionalService", "WebSite"]],
       ["/blog/top-web-development-trends-2026", ["BlogPosting", "BreadcrumbList"]],
       ["/careers/ai-engineer", ["JobPosting", "BreadcrumbList"]],
+      ["/contact", ["FAQPage"]],
+      ["/services", ["Organization", "Service"]],
     ];
 
     for (const [path, types] of expectations) {
@@ -56,17 +58,31 @@ test.describe("public route sweep @desktop", () => {
       expect(blocks.length, path).toBeGreaterThan(0);
 
       const parsed = blocks.map((block) => JSON.parse(block)) as Array<{
-        "@graph"?: Array<{ "@type": string }>;
-        "@type"?: string;
+        "@graph"?: Array<{ "@type": string | string[] }>;
+        "@type"?: string | string[];
       }>;
+      const typesOf = (node: { "@type"?: string | string[] }) =>
+        Array.isArray(node["@type"]) ? node["@type"] : node["@type"] ? [node["@type"]] : [];
       const found = parsed.flatMap((entry) =>
-        entry["@graph"]?.map((node) => node["@type"]) ?? (entry["@type"] ? [entry["@type"]] : []),
+        entry["@graph"]?.flatMap(typesOf) ?? typesOf(entry),
       );
 
       for (const type of types) {
         expect(found, `${path} should include ${type}`).toContain(type);
       }
     }
+  });
+
+  test("exposes llms.txt for generative search", async ({ request }) => {
+    const response = await request.get("/llms.txt");
+    expect(response.status()).toBe(200);
+    expect(response.headers()["content-type"]).toContain("text/plain");
+
+    const body = await response.text();
+    expect(body).toContain("# Cynbit Technologies");
+    expect(body).toContain("Canonical site:");
+    expect(body).toContain("/services");
+    expect(body).toContain("/contact");
   });
 });
 

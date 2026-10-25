@@ -7,15 +7,16 @@ import { Container } from "@/components/ui/container";
 import { PageHeader } from "@/components/ui/page-header";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { teamMembers, teamValues } from "@/content/site-pages";
+import { pageMetadata } from "@/lib/metadata";
 
 export const revalidate = 300;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "The team",
   description:
     "Meet the board of digital architects behind Cynbit Technologies, led by founder Mohak Saini in Jaipur.",
-  alternates: { canonical: "/team" },
-};
+  path: "/team",
+});
 
 export default function TeamPage() {
   return (

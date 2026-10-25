@@ -39,6 +39,68 @@ test.describe("mobile navigation @mobile", () => {
     await page.keyboard.press("Escape");
     await expect(menu).not.toBeVisible();
   });
+
+  test("opens at the 768px breakpoint", async ({ page }) => {
+    await page.setViewportSize({ width: 768, height: 900 });
+    await page.goto("/");
+
+    await page.getByRole("button", { name: "Open menu" }).click();
+
+    const menu = page.getByRole("dialog", { name: "Site menu" });
+    await expect(menu).toBeVisible();
+    await expect
+      .poll(() => menu.evaluate((element) => element.getBoundingClientRect().width))
+      .toBe(768);
+  });
+});
+
+test.describe("page chrome", () => {
+  test("footer reaches the end of the document", async ({ page }) => {
+    for (const width of [390, 768, 1440]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto("/");
+
+      const gap = await page.evaluate(() => {
+        const footer = document.querySelector("footer");
+        if (!footer) return Number.POSITIVE_INFINITY;
+        return document.documentElement.scrollHeight - (footer.getBoundingClientRect().bottom + window.scrollY);
+      });
+
+      expect(gap, `gap below footer at ${width}px`).toBeLessThanOrEqual(1);
+    }
+  });
+});
+
+test.describe("hero phrase rotator", () => {
+  test("shows the first phrase, then rotates it", async ({ page }) => {
+    await page.goto("/");
+    await expect(
+      page.getByRole("heading", { level: 1, name: "Architecting what's next." }),
+    ).toBeVisible();
+    await expect(page.locator(".hero-rotator-word.is-current")).toHaveText("what's next.");
+
+    await expect(page.locator(".hero-rotator-word", { hasText: "what works." })).toHaveClass(
+      /is-entering/,
+      { timeout: 5_000 },
+    );
+  });
+
+  test.describe("reduced motion", () => {
+    test.use({ reducedMotion: "reduce" });
+
+    test("keeps the phrase static", async ({ page }) => {
+      await page.goto("/");
+      await expect(page.locator(".hero-rotator-word.is-current")).toHaveText("what's next.");
+
+      await page.waitForTimeout(4_000);
+
+      await expect(page.locator(".hero-rotator-word.is-current")).toHaveText("what's next.");
+      await expect(page.locator(".hero-rotator-word", { hasText: "what works." })).toHaveCSS(
+        "opacity",
+        "0",
+      );
+    });
+  });
 });
 
 test.describe("contact experience @desktop", () => {
