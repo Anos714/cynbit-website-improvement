@@ -10,7 +10,7 @@ export function Accordion({
   items,
   className,
 }: {
-  items: AccordionItem[];
+  items: readonly AccordionItem[];
   className?: string;
 }) {
   return (
