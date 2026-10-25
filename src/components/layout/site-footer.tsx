@@ -4,14 +4,8 @@ import { NewsletterTrigger } from "@/components/forms/newsletter-trigger";
 import { ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { Logo } from "@/components/ui/logo";
+import { SocialIcon } from "@/components/ui/social-icon";
 import { footerNav, legalNav, site } from "@/lib/site";
-
-const socialMarks = {
-  LinkedIn: "in",
-  Instagram: "ig",
-  Facebook: "fb",
-  X: "X",
-} as const;
 
 export function SiteFooter() {
   return (
@@ -58,9 +52,7 @@ export function SiteFooter() {
                   rel="noreferrer noopener"
                   className="grid size-10 place-items-center rounded-full bg-white/10 text-white transition-colors hover:bg-peach hover:text-ink"
                 >
-                  <span aria-hidden="true" className="font-headline text-xs font-extrabold">
-                    {socialMarks[social.label]}
-                  </span>
+                  <SocialIcon name={social.label} className="size-4" />
                   <span className="sr-only">Cynbit on {social.label}</span>
                 </a>
               ))}
