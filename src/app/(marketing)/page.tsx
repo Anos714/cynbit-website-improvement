@@ -5,7 +5,7 @@ import { SectionHeading } from "@/components/ui/section-heading";
 
 export default function DesignSystemPreview() {
   return (
-    <main className="min-h-screen py-16">
+    <div className="min-h-screen py-16">
       <Container>
         <p className="font-bold text-brand">Design system in progress</p>
         <h1 className="display-hero mt-5 max-w-[12ch]">Architecting tomorrow.</h1>
@@ -43,6 +43,6 @@ export default function DesignSystemPreview() {
           </p>
         </Reveal>
       </Container>
-    </main>
+    </div>
   );
 }

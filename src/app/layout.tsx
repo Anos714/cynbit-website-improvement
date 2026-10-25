@@ -1,6 +1,7 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { MotionProvider } from "@/components/motion/motion-provider";
+import { site } from "@/lib/site";
 import "./globals.css";
 
 const manrope = localFont({
@@ -20,12 +21,56 @@ const jakarta = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(site.url),
   title: {
     default: "Cynbit Technologies | AI automation and software",
-    template: "%s | Cynbit Technologies",
+    template: `%s | ${site.name}`,
   },
-  description:
-    "Cynbit Technologies architects AI automation, custom software and scalable cloud systems from Jaipur, India.",
+  description: site.description,
+  applicationName: site.name,
+  authors: [{ name: site.name, url: site.url }],
+  creator: site.name,
+  publisher: site.name,
+  alternates: {
+    canonical: "/",
+  },
+  icons: {
+    icon: [{ url: "/brand/cynbit-favicon.svg", type: "image/svg+xml" }],
+    shortcut: "/brand/cynbit-favicon.svg",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_IN",
+    url: "/",
+    siteName: site.name,
+    title: "Cynbit Technologies | AI automation and software",
+    description: site.description,
+    images: [{ url: "/og-default.png", width: 1200, height: 630, alt: site.name }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Cynbit Technologies | AI automation and software",
+    description: site.description,
+    images: ["/og-default.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#f2f6f4",
+  colorScheme: "light",
 };
 
 export default function RootLayout({
