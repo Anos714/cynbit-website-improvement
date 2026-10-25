@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { ArrowRight, Mail, MapPin, Phone } from "lucide-react";
+import { ContactForm } from "@/components/forms/contact-form";
 import { Accordion } from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { PageHeader } from "@/components/ui/page-header";
 import { contactChannels, contactFaq } from "@/content/site-pages";
@@ -54,116 +53,7 @@ export default function ContactPage() {
                 in this first message.
               </p>
 
-              <form className="mt-8 grid gap-5">
-                <div className="form-honey" aria-hidden="true">
-                  <label htmlFor="website">Website</label>
-                  <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
-                </div>
-
-                <div className="grid gap-5 sm:grid-cols-2">
-                  <div>
-                    <label className="field-label" htmlFor="name">
-                      Your name *
-                    </label>
-                    <input
-                      className="field-input"
-                      id="name"
-                      name="name"
-                      autoComplete="name"
-                      maxLength={120}
-                      placeholder="Rahul Sain"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="field-label" htmlFor="email">
-                      Work email *
-                    </label>
-                    <input
-                      className="field-input"
-                      id="email"
-                      name="email"
-                      type="email"
-                      autoComplete="email"
-                      maxLength={254}
-                      placeholder="you@company.com"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className="grid gap-5 sm:grid-cols-2">
-                  <div>
-                    <label className="field-label" htmlFor="company">
-                      Company
-                    </label>
-                    <input
-                      className="field-input"
-                      id="company"
-                      name="company"
-                      autoComplete="organization"
-                      maxLength={160}
-                      placeholder="Company or team"
-                    />
-                  </div>
-                  <div>
-                    <label className="field-label" htmlFor="interest">
-                      What is this about?
-                    </label>
-                    <select className="field-input" id="interest" name="interest" defaultValue="project">
-                      <option value="project">A new project</option>
-                      <option value="ai">AI automation</option>
-                      <option value="software">Software engineering</option>
-                      <option value="product">Cynbit products</option>
-                      <option value="bitelevate">BitElevate</option>
-                      <option value="careers">Careers</option>
-                      <option value="other">Something else</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="field-label" htmlFor="message">
-                    What are you building? *
-                  </label>
-                  <textarea
-                    className="field-input"
-                    id="message"
-                    name="message"
-                    maxLength={5000}
-                    placeholder="The problem, the outcome you need and any constraints worth knowing."
-                    required
-                  />
-                </div>
-
-                <div className="flex items-start gap-3 text-sm leading-relaxed text-muted">
-                  <input
-                    id="consent"
-                    name="consent"
-                    type="checkbox"
-                    value="yes"
-                    className="mt-1 size-4 shrink-0 accent-[var(--brand)]"
-                    required
-                  />
-                  <label htmlFor="consent">
-                    I agree that Cynbit may use these details to respond to this inquiry. See the{" "}
-                    <Link href="/privacy" className="font-bold text-brand underline underline-offset-4">
-                      privacy policy
-                    </Link>
-                    .
-                  </label>
-                </div>
-
-                <div className="flex flex-wrap items-center gap-4">
-                  <Button type="submit" size="large">
-                    Send inquiry
-                    <ArrowRight aria-hidden="true" className="size-4" />
-                  </Button>
-                  <p className="max-w-xs text-xs leading-relaxed text-muted">
-                    This form is not a newsletter sign-up. We will not add you to a marketing list.
-                  </p>
-                </div>
-              </form>
+              <ContactForm />
             </div>
 
             <div className="grid gap-5">
@@ -195,7 +85,7 @@ export default function ContactPage() {
                   </span>
                   {contactChannels.support}
                 </a>
-                <p className="mt-4 text-xs leading-relaxed text-white/45">
+                <p className="mt-4 text-xs leading-relaxed text-white/65">
                   For existing clients and operational support. Project inquiries are best sent
                   through the form.
                 </p>

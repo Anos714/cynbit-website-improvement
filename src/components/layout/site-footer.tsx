@@ -1,5 +1,6 @@
 import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
+import { NewsletterTrigger } from "@/components/forms/newsletter-trigger";
 import { ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { Logo } from "@/components/ui/logo";
@@ -122,6 +123,7 @@ export function SiteFooter() {
         <div className="mb-5 flex flex-col gap-5 rounded-[1.2rem] bg-white/[0.055] px-5 py-5 text-xs text-white/70 md:flex-row md:items-center md:justify-between md:px-7">
           <p>© {new Date().getFullYear()} Cynbit Technologies. All rights reserved.</p>
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+            <NewsletterTrigger className="text-white/70" />
             {legalNav.map((link) => (
               <Link key={link.href} href={link.href} className="hover:text-white">
                 {link.label}
