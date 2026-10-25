@@ -1,20 +1,40 @@
 import "server-only";
 import { z } from "zod";
 
-const optionalText = z.string().trim().min(1).optional();
-const optionalUrl = z.string().trim().url().optional();
+const emptyToUndefined = (value: unknown) =>
+  typeof value === "string" && value.trim() === "" ? undefined : value;
+
+const optionalText = z.preprocess(
+  emptyToUndefined,
+  z.string().trim().min(1).optional(),
+);
+const optionalUrl = z.preprocess(emptyToUndefined, z.string().trim().url().optional());
+const optionalEmail = z.preprocess(
+  emptyToUndefined,
+  z.string().trim().email().optional(),
+);
+const optionalSecret = z.preprocess(
+  emptyToUndefined,
+  z.string().min(32).optional(),
+);
 
 const schema = z
   .object({
     NEXT_PUBLIC_SITE_URL: optionalUrl,
     RESEND_API_KEY: optionalText,
-    CONTACT_TO_EMAIL: z.string().trim().email().optional(),
+    CONTACT_TO_EMAIL: optionalEmail,
     RESEND_FROM_EMAIL: optionalText,
-    REVALIDATE_SECRET: z.string().min(32).optional(),
+    REVALIDATE_SECRET: optionalSecret,
     UPSTASH_REDIS_REST_URL: optionalUrl,
     UPSTASH_REDIS_REST_TOKEN: optionalText,
-    EMAIL_TRANSPORT: z.enum(["resend", "demo"]).optional(),
-    CSP_ENFORCE: z.enum(["true", "false"]).optional(),
+    EMAIL_TRANSPORT: z.preprocess(
+      emptyToUndefined,
+      z.enum(["resend", "demo"]).optional(),
+    ),
+    CSP_ENFORCE: z.preprocess(
+      emptyToUndefined,
+      z.enum(["true", "false"]).optional(),
+    ),
   })
   .superRefine((value, context) => {
     const hasUpstashUrl = Boolean(value.UPSTASH_REDIS_REST_URL);
