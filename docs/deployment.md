@@ -34,6 +34,9 @@ enable real email, distributed rate limiting and on-demand revalidation.
 
 The environment schema refuses to boot with a half-configured Upstash pair, a
 short revalidation secret, or `EMAIL_TRANSPORT=resend` without credentials.
+The current production deployment has only `NEXT_PUBLIC_SITE_URL`; email,
+Upstash and the revalidation secret remain unset, so demo mode and the
+per-instance rate-limit fallback apply.
 
 ## 3. Deploy with the Vercel CLI
 

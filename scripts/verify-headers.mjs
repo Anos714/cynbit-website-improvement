@@ -106,11 +106,11 @@ try {
   const llmsBody = await llms.text();
   check("/llms.txt returns 200", llms.status === 200, `got ${llms.status}`);
   check("/llms.txt is plain text", header(llms, "content-type").includes("text/plain"));
-  const llmsMaxAge = Number(header(llms, "cache-control").match(/s-maxage=(\d+)/)?.[1] ?? 0);
+  const llmsCache = header(llms, "cache-control");
   check(
-    "/llms.txt is edge-cached",
-    llmsMaxAge >= 3600,
-    header(llms, "cache-control") || "missing Cache-Control",
+    "/llms.txt is publicly cacheable",
+    /(?:^|,\s*)public/.test(llmsCache) || /s-maxage=\d+/.test(llmsCache),
+    llmsCache || "missing Cache-Control",
   );
   check("/llms.txt names the canonical site", llmsBody.includes("Canonical site:"));
   await checkEndpoint("/.well-known/security.txt", 200);

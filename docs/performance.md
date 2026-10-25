@@ -25,10 +25,10 @@ The two structural problems were cache policy (PERF-02, PERF-03) and payload
 | Group | Baseline | Rebuild | Change |
 |---|---:|---:|---:|
 | JS decoded | 597,497 B | 535,585 B | −61,912 B (−10.4%) |
-| JS Brotli | 186,310 B | 141,357 B | −44,953 B (−24.1%) |
+| JS Brotli | 186,310 B | 141,352 B | −44,958 B (−24.1%) |
 | CSS decoded | 181,212 B | 55,642 B | −125,570 B (−69.3%) |
 | CSS Brotli | 25,695 B | 9,554 B | −16,141 B (−62.8%) |
-| **Total Brotli** | **212,005 B** | **150,911 B** | **−61,094 B (−28.8%)** |
+| **Total Brotli** | **212,005 B** | **150,906 B** | **−61,099 B (−28.8%)** |
 
 The CSS reduction is the design rebuild on Tailwind with a small semantic
 utility layer instead of a 177 KB generated stylesheet. The JS reduction comes

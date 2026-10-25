@@ -46,7 +46,7 @@ site was insecure in a way the evidence did not show.
 - Lighthouse (local production build) scored 94–100 on performance and 100 on
   accessibility, best practices and SEO across the sampled pages.
 - Compressed JS + CSS transfer on the homepage fell from 212,005 B to
-  150,911 B, a 28.8% reduction against the audit baseline.
+  150,906 B, a 28.8% reduction against the audit baseline.
 
 Section 7 explains exactly how those numbers were produced and what they do not
 prove.
@@ -115,15 +115,18 @@ Contact, newsletter and career applications share one pipeline:
    without processing, so bots do not learn they were caught.
 2. Minimum completion time of 2.5 seconds — catches naive automated posts
    without blocking fast humans.
-3. Zod schema validation on the server, including URL and email rules.
-4. Sliding-window limits of 5 per IP / 10 min, 3 per email / hour and 15 per
+3. Hydration guard — submit buttons remain disabled until the client has
+   hydrated and painted once, preventing an early click from triggering a
+   native form post before React attaches the Server Action.
+4. Zod schema validation on the server, including URL and email rules.
+5. Sliding-window limits of 5 per IP / 10 min, 3 per email / hour and 15 per
    email domain / hour. The strictest failure wins and the UI receives a retry
    hint.
-5. A random UUID reference returned to the user and written to logs instead of
+6. A random UUID reference returned to the user and written to logs instead of
    the message body or address.
-6. Header sanitisation before building the email, so a newline in a name cannot
+7. Header sanitisation before building the email, so a newline in a name cannot
    inject extra headers.
-7. Honest failure states: if Resend is not configured or fails, the UI says so
+8. Honest failure states: if Resend is not configured or fails, the UI says so
    and offers the public email address. It never shows a success message for
    an undelivered message.
 
@@ -194,11 +197,14 @@ The same checks were run against
 `https://cynbit-website-improvement.vercel.app` on 2026-10-26:
 
 - header verification passes on `/` and `/careers`, including enforced CSP,
-  the exact `s-maxage=300` policy and a same-origin CORS value;
+  the exact `s-maxage=300` policy, a same-origin CORS value and a publicly
+  cacheable `/llms.txt`;
 - Playwright visits all 82 sitemap URLs: `200`, visible `h1`, no console errors
   and no CSP violations;
-- structured data parses on the homepage, an article and a role;
+- structured data parses on the homepage (`ProfessionalService`), contact
+  (`FAQPage`), services (`Service`), an article and a role;
 - axe finds no serious or critical violations on the 16 top-level pages;
+- `/llms.txt` returns `200` as plain text;
 - the GitHub Actions workflow is green on `main`.
 
 One platform difference was found and fixed during this pass: Vercel adds
@@ -233,10 +239,10 @@ stylesheets, fetches each file and Brotli-compresses it at quality 11.
 | Group | Audit baseline | Rebuild | Change |
 |---|---:|---:|---:|
 | JS decoded | 597,497 B | 535,585 B | −10.4% |
-| JS Brotli | 186,310 B | 141,357 B | −24.1% |
+| JS Brotli | 186,310 B | 141,352 B | −24.1% |
 | CSS decoded | 181,212 B | 55,642 B | −69.3% |
 | CSS Brotli | 25,695 B | 9,554 B | −62.8% |
-| Total Brotli | 212,005 B | 150,911 B | −28.8% |
+| Total Brotli | 212,005 B | 150,906 B | −28.8% |
 
 The CSS drop comes from rebuilding the design on Tailwind with a small
 semantic layer instead of the original 177 KB utility bundle. The JS drop comes
