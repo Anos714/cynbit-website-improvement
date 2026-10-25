@@ -7,7 +7,15 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { Container } from "@/components/ui/container";
 import { Tag } from "@/components/ui/tag";
-import { careerExperience, careerSummary, careers, getCareer } from "@/content/careers";
+import {
+  CAREERS_POSTED_AT,
+  CAREERS_VALID_THROUGH,
+  careerExperience,
+  careerSummary,
+  careers,
+  getCareer,
+} from "@/content/careers";
+import { breadcrumbListJsonLd, jobPostingJsonLd } from "@/lib/seo";
 import { site } from "@/lib/site";
 
 export const revalidate = 300;
@@ -55,24 +63,24 @@ export default async function CareerPage({ params }: PageProps) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
-      {
-        "@type": "WebPage",
-        name: `${role.title} at Cynbit`,
-        description: summary,
-        mainEntityOfPage: canonicalUrl,
-        about: {
-          "@type": "Organization",
-          name: "Cynbit Technologies",
-          url: site.url,
-        },
-      },
-      {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Careers", item: `${site.url}/careers` },
-          { "@type": "ListItem", position: 2, name: role.title, item: canonicalUrl },
-        ],
-      },
+      jobPostingJsonLd({
+        title: role.title,
+        description: [
+          summary,
+          `Responsibilities: ${role.responsibilities.join(" ")}`,
+          `Requirements: ${role.requirements.join(" ")}`,
+        ].join("\n\n"),
+        url: canonicalUrl,
+        datePosted: CAREERS_POSTED_AT,
+        validThrough: CAREERS_VALID_THROUGH,
+        employmentType: role.type,
+        department: role.department,
+      }),
+      breadcrumbListJsonLd([
+        { name: "Careers", path: "/careers" },
+        { name: role.department, path: "/careers" },
+        { name: role.title },
+      ]),
     ],
   };
 

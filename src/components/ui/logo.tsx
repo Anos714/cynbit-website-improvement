@@ -16,7 +16,8 @@ export function Logo({
       alt="Cynbit Technologies"
       width={400}
       height={165}
-      priority={priority}
+      loading={priority ? "eager" : "lazy"}
+      fetchPriority={priority ? "high" : "auto"}
       className={cn("h-9 w-auto", inverted && "brightness-0 invert", className)}
     />
   );
