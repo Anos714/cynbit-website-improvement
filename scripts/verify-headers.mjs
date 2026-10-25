@@ -101,6 +101,18 @@ try {
   check("/sitemap.xml lists 82 URLs", urls === 82, `got ${urls}`);
 
   await checkEndpoint("/robots.txt", 200);
+  const llms = await get("/llms.txt", { read: true });
+  console.log(`\n/llms.txt -> ${llms.status}`);
+  const llmsBody = await llms.text();
+  check("/llms.txt returns 200", llms.status === 200, `got ${llms.status}`);
+  check("/llms.txt is plain text", header(llms, "content-type").includes("text/plain"));
+  const llmsMaxAge = Number(header(llms, "cache-control").match(/s-maxage=(\d+)/)?.[1] ?? 0);
+  check(
+    "/llms.txt is edge-cached",
+    llmsMaxAge >= 3600,
+    header(llms, "cache-control") || "missing Cache-Control",
+  );
+  check("/llms.txt names the canonical site", llmsBody.includes("Canonical site:"));
   await checkEndpoint("/.well-known/security.txt", 200);
   await checkEndpoint("/api/health", 200, { noStore: true });
   await checkEndpoint("/api/revalidate", 405);

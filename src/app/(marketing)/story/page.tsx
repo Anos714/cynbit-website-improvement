@@ -6,15 +6,16 @@ import { ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { PageHeader } from "@/components/ui/page-header";
 import { teamMembers } from "@/content/site-pages";
+import { pageMetadata } from "@/lib/metadata";
 
 export const revalidate = 300;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Our story",
   description:
     "From Jaipur to the world: the story behind Cynbit Technologies, from preparatory architecture work in 2021 to the studio it is today.",
-  alternates: { canonical: "/story" },
-};
+  path: "/story",
+});
 
 const timeline = [
   {

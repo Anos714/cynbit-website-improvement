@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { JsonLd } from "@/components/seo/json-ld";
+import { organizationAreaServed } from "@/lib/seo";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -64,6 +65,10 @@ export const metadata: Metadata = {
       "max-video-preview": -1,
     },
   },
+  other: {
+    "geo.region": "IN-RJ",
+    "geo.placename": "Jaipur, Rajasthan",
+  },
 };
 
 export const viewport: Viewport = {
@@ -90,13 +95,16 @@ export default function RootLayout({
             "@context": "https://schema.org",
             "@graph": [
               {
-                "@type": "Organization",
+                "@type": ["Organization", "ProfessionalService"],
                 "@id": `${site.url}/#organization`,
                 name: site.name,
+                description: site.description,
+                slogan: site.tagline,
                 url: site.url,
                 logo: `${site.url}/brand/cynbit-logo.svg`,
                 email: site.email,
                 telephone: site.phones[0],
+                foundingDate: "2024",
                 address: {
                   "@type": "PostalAddress",
                   streetAddress: site.address.line1,
@@ -105,6 +113,23 @@ export default function RootLayout({
                   postalCode: site.address.postalCode,
                   addressCountry: site.address.country,
                 },
+                areaServed: organizationAreaServed,
+                knowsAbout: [
+                  "AI automation",
+                  "AI agents",
+                  "LLM automation",
+                  "Software engineering",
+                  "Cloud infrastructure",
+                  "Technical SEO",
+                  "Growth engineering",
+                ],
+                contactPoint: {
+                  "@type": "ContactPoint",
+                  contactType: "sales",
+                  email: site.email,
+                  telephone: site.phones[0],
+                  areaServed: "IN",
+                },
                 sameAs: site.socials.map((social) => social.href),
               },
               {
@@ -112,6 +137,7 @@ export default function RootLayout({
                 "@id": `${site.url}/#website`,
                 url: site.url,
                 name: site.name,
+                description: site.description,
                 publisher: { "@id": `${site.url}/#organization` },
                 inLanguage: "en-IN",
               },

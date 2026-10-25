@@ -1,24 +1,33 @@
 import type { Metadata } from "next";
 import { ArrowRight, Mail, MapPin, Phone } from "lucide-react";
 import { ContactForm } from "@/components/forms/contact-form";
+import { JsonLd } from "@/components/seo/json-ld";
 import { Accordion } from "@/components/ui/accordion";
 import { Container } from "@/components/ui/container";
 import { PageHeader } from "@/components/ui/page-header";
 import { contactChannels, contactFaq } from "@/content/site-pages";
+import { absoluteUrl, faqPageJsonLd } from "@/lib/seo";
 import { site as siteConfig } from "@/lib/site";
+import { pageMetadata } from "@/lib/metadata";
 
 export const revalidate = 300;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Contact",
   description:
     "Start a project, ask about BitElevate or talk to the Cynbit team in Jaipur. Tell us what you are building and we will reply with a practical next step.",
-  alternates: { canonical: "/contact" },
+  path: "/contact",
+});
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  ...faqPageJsonLd(contactFaq, absoluteUrl("/contact")),
 };
 
 export default function ContactPage() {
   return (
     <>
+      <JsonLd data={faqJsonLd} />
       <PageHeader
         title="Tell us what you're building."
         intro="A short note about the problem, the outcome and the constraints is enough. We will reply with a practical next step, or tell you honestly if we are not the right team."

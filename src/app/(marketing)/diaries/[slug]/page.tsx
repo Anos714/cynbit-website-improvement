@@ -7,6 +7,7 @@ import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { getDiaryEntry, getRelatedDiaryEntries, diaryEntries } from "@/content/diaries";
+import { pageMetadata } from "@/lib/metadata";
 import { site } from "@/lib/site";
 import { formatDate } from "@/lib/utils";
 
@@ -25,18 +26,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!entry) return { title: "Diary entry not found" };
 
-  return {
+  return pageMetadata({
     title: entry.title,
     description: `${entry.quote} A student diary entry published by BitElevate and Cynbit Technologies.`,
-    alternates: { canonical: `/diaries/${entry.slug}` },
-    openGraph: {
-      type: "article",
-      title: entry.title,
-      description: entry.quote,
-      url: `/diaries/${entry.slug}`,
+    path: `/diaries/${entry.slug}`,
+    ogDescription: entry.quote,
+    imageAlt: `${entry.title} — a BitElevate student diary`,
+    article: {
       publishedTime: new Date(entry.date).toISOString(),
+      section: "Student diaries",
+      authors: [entry.author],
     },
-  };
+  });
 }
 
 export default async function DiaryEntryPage({ params }: PageProps) {

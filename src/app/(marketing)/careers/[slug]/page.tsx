@@ -15,6 +15,7 @@ import {
   careers,
   getCareer,
 } from "@/content/careers";
+import { pageMetadata } from "@/lib/metadata";
 import { breadcrumbListJsonLd, jobPostingJsonLd } from "@/lib/seo";
 import { site } from "@/lib/site";
 
@@ -34,17 +35,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!role) return { title: "Role not found" };
   const summary = careerSummary(role);
 
-  return {
+  return pageMetadata({
     title: role.title,
     description: `${role.title} at Cynbit Technologies. ${summary} ${role.location}.`,
-    alternates: { canonical: `/careers/${role.slug}` },
-    openGraph: {
-      type: "article",
-      title: `${role.title} at Cynbit`,
-      description: summary,
-      url: `/careers/${role.slug}`,
-    },
-  };
+    path: `/careers/${role.slug}`,
+    ogTitle: `${role.title} at Cynbit`,
+    ogDescription: summary,
+    imageAlt: `${role.title} at Cynbit Technologies`,
+  });
 }
 
 export default async function CareerPage({ params }: PageProps) {

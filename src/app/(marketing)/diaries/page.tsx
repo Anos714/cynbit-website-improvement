@@ -8,15 +8,16 @@ import { PageHeader } from "@/components/ui/page-header";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { diaryEntries } from "@/content/diaries";
 import { formatDate } from "@/lib/utils";
+import { pageMetadata } from "@/lib/metadata";
 
 export const revalidate = 300;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Student diaries",
   description:
     "Unfiltered stories from engineering students about pressure, belonging, direction and the parts of college nobody puts in the brochure. Published by BitElevate.",
-  alternates: { canonical: "/diaries" },
-};
+  path: "/diaries",
+});
 
 const cardTone = ["bg-mint", "bg-peach", "bg-sky", "bg-shell"] as const;
 

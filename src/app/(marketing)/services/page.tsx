@@ -2,21 +2,24 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { Reveal } from "@/components/motion/reveal";
+import { JsonLd } from "@/components/seo/json-ld";
 import { ArrowLink } from "@/components/ui/arrow-link";
 import { ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { PageHeader } from "@/components/ui/page-header";
 import { Tag } from "@/components/ui/tag";
 import { servicePractices, technologyGroups } from "@/content/site-pages";
+import { absoluteUrl, servicesJsonLd } from "@/lib/seo";
+import { pageMetadata } from "@/lib/metadata";
 
 export const revalidate = 300;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Services",
   description:
     "Explore Cynbit's service ecosystem: autonomous AI agents, full-stack software development, cloud architecture, technical SEO and growth engineering.",
-  alternates: { canonical: "/services" },
-};
+  path: "/services",
+});
 
 const tone = {
   mint: "bg-mint",
@@ -24,9 +27,15 @@ const tone = {
   peach: "bg-peach",
 } as const;
 
+const servicesJsonLdData = {
+  "@context": "https://schema.org",
+  "@graph": servicesJsonLd(servicePractices, absoluteUrl("/services")),
+};
+
 export default function ServicesPage() {
   return (
     <>
+      <JsonLd data={servicesJsonLdData} />
       <PageHeader
         title="Built for scale."
         intro="AI automation, software engineering and growth systems designed for the business you are becoming, not only the one you are today."

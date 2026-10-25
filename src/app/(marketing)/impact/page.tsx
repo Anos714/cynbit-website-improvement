@@ -7,15 +7,16 @@ import { ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { PageHeader } from "@/components/ui/page-header";
 import { impactProgrammes } from "@/content/site-pages";
+import { pageMetadata } from "@/lib/metadata";
 
 export const revalidate = 300;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Social impact",
   description:
     "Cynbit for Society: BitElevate's evolution from technical training to holistic student support, and our affiliation with Manav Seva Trust.",
-  alternates: { canonical: "/impact" },
-};
+  path: "/impact",
+});
 
 export default function ImpactPage() {
   return (

@@ -11,15 +11,16 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { Tag } from "@/components/ui/tag";
 import { blogPosts, featuredBlogPost } from "@/content/blog";
 import { formatDate } from "@/lib/utils";
+import { pageMetadata } from "@/lib/metadata";
 
 export const revalidate = 300;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Insights",
   description:
     "Practical thinking on AI agents, automation, software engineering, cloud systems and the operational work in between. The Cynbit insights archive.",
-  alternates: { canonical: "/blog" },
-};
+  path: "/blog",
+});
 
 export default function BlogPage() {
   return (
