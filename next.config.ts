@@ -7,12 +7,12 @@ const withBundleAnalyzer = createBundleAnalyzer({
 
 const isProduction = process.env.NODE_ENV === "production";
 const isDeployed = process.env.VERCEL === "1";
-const enforceCsp = process.env.CSP_ENFORCE === "true";
+const enforceCsp = isProduction && process.env.CSP_ENFORCE !== "false";
 
 // The marketing site is statically rendered and served from ISR. A per-request
 // nonce would force every page into dynamic rendering, undoing the cache fix.
-// This policy is therefore static-safe and ships in Report-Only mode by default;
-// set CSP_ENFORCE=true only after reviewing reports.
+// This static-safe policy is enforced in production and Report-Only in dev so
+// React refresh keeps working. A nonce-based policy is the documented follow-up.
 const contentSecurityPolicy = [
   "default-src 'self'",
   `script-src 'self' 'unsafe-inline'${isProduction ? "" : " 'unsafe-eval'"}`,
@@ -102,11 +102,20 @@ const nextConfig: NextConfig = {
         ],
       })),
       {
-        source: "/_next/static/:path*",
+        source: "/sitemap.xml",
         headers: [
           {
             key: "Cache-Control",
-            value: "public, max-age=31536000, immutable",
+            value: "public, max-age=0, s-maxage=3600, stale-while-revalidate=86400",
+          },
+        ],
+      },
+      {
+        source: "/robots.txt",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=0, s-maxage=3600, stale-while-revalidate=86400",
           },
         ],
       },
