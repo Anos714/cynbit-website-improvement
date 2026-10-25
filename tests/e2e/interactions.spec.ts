@@ -7,7 +7,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe("newsletter dialog", () => {
-  test("opens from the footer, submits and closes with Escape", async ({ page }) => {
+  test("opens from the footer, submits and closes with Escape", async ({ page }, testInfo) => {
     await page.goto("/");
     await page.getByRole("button", { name: "Newsletter" }).click();
 
@@ -15,7 +15,9 @@ test.describe("newsletter dialog", () => {
     await expect(dialog).toBeVisible();
     await page.waitForTimeout(2_700);
 
-    await page.locator("#newsletter-email").fill("playwright-newsletter@example.com");
+    await page
+      .locator("#newsletter-email")
+      .fill(`playwright-newsletter-${testInfo.project.name}-${Date.now()}@example.com`);
     await page.locator("#newsletter-consent").check();
     await page.getByRole("button", { name: "Join the list" }).click();
 
@@ -112,7 +114,7 @@ test.describe("contact experience @desktop", () => {
     await expect(first).toHaveAttribute("open");
   });
 
-  test("validates on the server, then accepts a complete inquiry", async ({ page }) => {
+  test("validates on the server, then accepts a complete inquiry", async ({ page }, testInfo) => {
     await page.goto("/contact");
     await page.waitForTimeout(2_700);
 
@@ -122,7 +124,9 @@ test.describe("contact experience @desktop", () => {
     await expect(page.getByText("Enter your name.")).toBeVisible();
 
     await page.locator("#contact-name").fill("Playwright Reviewer");
-    await page.locator("#contact-email").fill("playwright-contact@example.com");
+    await page
+      .locator("#contact-email")
+      .fill(`playwright-contact-${testInfo.project.name}-${Date.now()}@example.com`);
     await page.locator("#contact-company").fill("Quality Desk");
     await page.locator("#contact-message").fill(
       "Checking the rebuilt contact flow end to end on a local production build.",
@@ -136,12 +140,14 @@ test.describe("contact experience @desktop", () => {
 });
 
 test.describe("career application @desktop", () => {
-  test("accepts a valid application in demo transport", async ({ page }) => {
+  test("accepts a valid application in demo transport", async ({ page }, testInfo) => {
     await page.goto("/careers/ai-engineer");
     await page.waitForTimeout(2_700);
 
     await page.locator("#career-name").fill("Playwright Candidate");
-    await page.locator("#career-email").fill("playwright-career@example.com");
+    await page
+      .locator("#career-email")
+      .fill(`playwright-career-${testInfo.project.name}-${Date.now()}@example.com`);
     await page.locator("#career-portfolio").fill("https://example.com/portfolio");
     await page.locator("#career-message").fill(
       "A short end-to-end check of the rebuilt application flow against a local build.",

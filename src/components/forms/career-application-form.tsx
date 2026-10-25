@@ -5,6 +5,7 @@ import { useActionState, useEffect, useRef } from "react";
 import { ArrowRight } from "lucide-react";
 import { submitCareerApplication } from "@/lib/actions/careers";
 import { FieldError, FormFeedback } from "@/components/forms/form-feedback";
+import { useHydrated } from "@/lib/use-hydrated";
 import { Button } from "@/components/ui/button";
 import { initialFormState } from "@/lib/forms";
 
@@ -19,6 +20,7 @@ export function CareerApplicationForm({
     submitCareerApplication,
     initialFormState,
   );
+  const hydrated = useHydrated();
   const startedAtRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -172,7 +174,12 @@ export function CareerApplicationForm({
           </div>
         </div>
         <div className="flex flex-wrap items-center gap-4">
-          <Button type="submit" size="large" disabled={pending} aria-busy={pending}>
+          <Button
+            type="submit"
+            size="large"
+            disabled={pending || !hydrated}
+            aria-busy={pending || !hydrated}
+          >
             {pending ? "Sending..." : "Send application"}
             <ArrowRight aria-hidden="true" className="size-4" />
           </Button>

@@ -5,6 +5,7 @@ import { useActionState, useEffect, useRef } from "react";
 import { ArrowRight } from "lucide-react";
 import { submitContact } from "@/lib/actions/contact";
 import { FieldError, FormFeedback } from "@/components/forms/form-feedback";
+import { useHydrated } from "@/lib/use-hydrated";
 import { Button } from "@/components/ui/button";
 import {
   contactInterests,
@@ -14,6 +15,7 @@ import {
 
 export function ContactForm() {
   const [state, formAction, pending] = useActionState(submitContact, initialFormState);
+  const hydrated = useHydrated();
   const interestRef = useRef<HTMLSelectElement>(null);
   const startedAtRef = useRef<HTMLInputElement>(null);
 
@@ -168,7 +170,12 @@ export function ContactForm() {
         </div>
 
         <div className="flex flex-wrap items-center gap-4">
-          <Button type="submit" size="large" disabled={pending} aria-busy={pending}>
+          <Button
+            type="submit"
+            size="large"
+            disabled={pending || !hydrated}
+            aria-busy={pending || !hydrated}
+          >
             {pending ? "Sending..." : "Send inquiry"}
             <ArrowRight aria-hidden="true" className="size-4" />
           </Button>
