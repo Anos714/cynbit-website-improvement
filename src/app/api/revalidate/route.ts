@@ -2,6 +2,7 @@ import { timingSafeEqual } from "node:crypto";
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { env } from "@/lib/env";
 
 export const runtime = "nodejs";
 
@@ -32,7 +33,7 @@ function json(message: string, status: number) {
 }
 
 export async function POST(request: Request) {
-  const secret = process.env.REVALIDATE_SECRET;
+  const secret = env.REVALIDATE_SECRET;
   if (!secret) {
     return json("Revalidation is not configured.", 503);
   }
