@@ -63,7 +63,7 @@ export default function BlogPage() {
                   </p>
                 </div>
                 <div className="mt-10 flex items-center justify-between gap-4">
-                  <div className="text-sm text-white/50">
+                  <div className="text-sm text-white/65">
                     <p>{featuredBlogPost.author}</p>
                     <time dateTime={featuredBlogPost.publishedAt}>
                       {formatDate(featuredBlogPost.publishedAt)}

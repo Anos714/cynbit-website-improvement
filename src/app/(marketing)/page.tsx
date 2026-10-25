@@ -80,7 +80,7 @@ export default function HomePage() {
           <dl className="grid grid-cols-2 gap-x-6 gap-y-7 md:grid-cols-4">
             {homeContent.facts.map((fact) => (
               <div key={fact.label}>
-                <dt className="text-sm font-semibold text-white/50">{fact.label}</dt>
+                <dt className="text-sm font-semibold text-white/65">{fact.label}</dt>
                 <dd className="mt-1 font-headline text-[clamp(1.35rem,2.4vw,2rem)] font-extrabold tracking-[-0.04em]">
                   {fact.value}
                 </dd>
@@ -147,7 +147,7 @@ export default function HomePage() {
                         <p className="text-[0.7rem] font-bold leading-tight">
                           {member.name.split(" ")[0]}
                         </p>
-                        <p className="mt-0.5 text-[0.6rem] leading-tight text-white/55">
+                        <p className="mt-0.5 text-[0.6rem] leading-tight text-white/70">
                           {member.title}
                         </p>
                       </div>
@@ -213,7 +213,7 @@ export default function HomePage() {
                         <p className="font-headline text-4xl font-extrabold leading-none tracking-[-0.05em] text-peach">
                           {featuredCaseStudies[0].metricValue}
                         </p>
-                        <p className="mt-1 text-sm text-white/55">
+                        <p className="mt-1 text-sm text-white/70">
                           {featuredCaseStudies[0].metricLabel} · client-reported
                         </p>
                       </div>
@@ -281,7 +281,7 @@ export default function HomePage() {
                         <p className="text-sm font-semibold leading-relaxed text-white/80">
                           “{voice.quote}”
                         </p>
-                        <p className="mt-0.5 text-xs text-white/45">
+                        <p className="mt-0.5 text-xs text-white/65">
                           {voice.name}, {voice.college}
                         </p>
                       </div>
@@ -372,7 +372,7 @@ export default function HomePage() {
             <ButtonLink href="/contact" variant="on-dark">
               Bring us the problem
             </ButtonLink>
-            <p className="text-sm text-white/50">Discovery starts with the actual constraint.</p>
+            <p className="text-sm text-white/65">Discovery starts with the actual constraint.</p>
           </div>
         </Container>
       </section>

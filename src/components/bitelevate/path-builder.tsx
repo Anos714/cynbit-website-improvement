@@ -124,7 +124,7 @@ export function PathBuilder({ dimensions }: { dimensions: readonly Dimension[] }
       <aside className="rounded-card bg-brand-deep p-6 text-white lg:sticky lg:top-28">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="text-sm font-semibold text-white/55">Your working path</p>
+            <p className="text-sm font-semibold text-white/70">Your working path</p>
             <p className="mt-1 font-headline text-2xl font-extrabold tracking-[-0.04em]">
               {selected.length} of {MAX_SELECTION} chosen
             </p>
@@ -166,12 +166,12 @@ export function PathBuilder({ dimensions }: { dimensions: readonly Dimension[] }
             <ArrowRight aria-hidden="true" className="size-4" />
           </Link>
         ) : (
-          <span className="button-base mt-6 w-full bg-white/15 text-white/50">
+          <span className="button-base mt-6 w-full bg-white/15 text-white/65">
             Talk through this path
             <ArrowRight aria-hidden="true" className="size-4" />
           </span>
         )}
-        <p className="mt-3 text-center text-xs leading-relaxed text-white/45">
+        <p className="mt-3 text-center text-xs leading-relaxed text-white/65">
           This is a conversation starter, not a formal enrolment.
         </p>
       </aside>

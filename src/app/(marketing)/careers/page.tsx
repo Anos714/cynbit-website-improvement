@@ -6,7 +6,7 @@ import { ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { PageHeader } from "@/components/ui/page-header";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { careers, fullTimeRoles, internships } from "@/content/careers";
+import { careerSummary, careers, fullTimeRoles, internships } from "@/content/careers";
 import { careerBenefits, operatingModel } from "@/content/site-pages";
 
 export const revalidate = 300;
@@ -41,7 +41,7 @@ function RoleList({ roles, heading }: { roles: CareerRole[]; heading: string }) 
                   {role.title}
                 </p>
                 <p className="mt-1 max-w-2xl text-sm leading-relaxed text-muted">
-                  {role.description}
+                  {careerSummary(role)}
                 </p>
               </div>
               <p className="text-sm font-semibold text-muted">{role.department}</p>
@@ -70,7 +70,7 @@ export default function CareersPage() {
             {careers.length}
           </p>
           <p className="mt-2 text-sm text-white/60">open roles across engineering and growth.</p>
-          <p className="mt-4 text-sm text-white/45">
+          <p className="mt-4 text-sm text-white/65">
             {fullTimeRoles.length} full-time · {internships.length} internships
           </p>
         </div>
@@ -116,7 +116,7 @@ export default function CareersPage() {
                     <h3 className="font-headline text-xl font-extrabold tracking-[-0.035em]">
                       {item.title}
                     </h3>
-                    <p className="mt-2 text-sm leading-relaxed text-white/55">{item.description}</p>
+                    <p className="mt-2 text-sm leading-relaxed text-white/70">{item.description}</p>
                   </div>
                 </Reveal>
               ))}

@@ -24,7 +24,7 @@ export function ProductPlate({ product }: { product: Product }) {
 
       <div className="mt-10 rounded-[1.2rem] bg-brand-deep p-4 text-white md:p-5">
         <div className="flex items-center justify-between gap-3">
-          <p className="text-sm font-semibold text-white/55">Capability view</p>
+          <p className="text-sm font-semibold text-white/70">Capability view</p>
           <ArrowUpRight aria-hidden="true" className="size-4 text-peach" />
         </div>
         <p className="mt-6 max-w-[15ch] font-headline text-[clamp(1.65rem,2.4vw,2.3rem)] font-extrabold leading-none tracking-[-0.05em]">

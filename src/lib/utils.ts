@@ -11,7 +11,7 @@ export function formatDate(date: string | Date, options?: Intl.DateTimeFormatOpt
     day: "numeric",
     month: "long",
     year: "numeric",
-    timeZone: "UTC",
+    timeZone: "Asia/Kolkata",
     ...options,
   }).format(value);
 }

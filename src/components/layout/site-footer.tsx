@@ -55,12 +55,12 @@ export function SiteFooter() {
                   href={social.href}
                   target="_blank"
                   rel="noreferrer noopener"
-                  aria-label={`Cynbit on ${social.label}`}
                   className="grid size-10 place-items-center rounded-full bg-white/10 text-white transition-colors hover:bg-peach hover:text-ink"
                 >
                   <span aria-hidden="true" className="font-headline text-xs font-extrabold">
                     {socialMarks[social.label]}
                   </span>
+                  <span className="sr-only">Cynbit on {social.label}</span>
                 </a>
               ))}
             </div>
@@ -119,7 +119,7 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="mb-5 flex flex-col gap-5 rounded-[1.2rem] bg-white/[0.055] px-5 py-5 text-xs text-white/55 md:flex-row md:items-center md:justify-between md:px-7">
+        <div className="mb-5 flex flex-col gap-5 rounded-[1.2rem] bg-white/[0.055] px-5 py-5 text-xs text-white/70 md:flex-row md:items-center md:justify-between md:px-7">
           <p>© {new Date().getFullYear()} Cynbit Technologies. All rights reserved.</p>
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
             {legalNav.map((link) => (

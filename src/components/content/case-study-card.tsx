@@ -50,7 +50,7 @@ export function CaseStudyCard({
         </div>
         <p className="mt-3 text-sm leading-relaxed text-muted">
           <span className="font-bold text-ink">{study.metricValue}</span> {study.metricLabel}
-          <span className="text-muted/70"> · client-reported</span>
+          <span className="text-muted"> · client-reported</span>
         </p>
       </Link>
     </article>
